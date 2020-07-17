@@ -1,9 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: elastalert-config-yaml
+  name: {{ .Chart.Name }}-config-test
 data:
-  config.yaml: |
+  config-test.yaml: |
+    # NOTE: This config is used when testing a rule
+    
     # The elasticsearch hostname for metadata writeback
     # Note that every rule can have its own elasticsearch host
     es_host: elastic-elasticsearch-client

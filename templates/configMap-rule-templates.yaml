@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: elastalert-rule-templates
+  name: {{ .Chart.Name }}-rule-templates
 data:
   detection_template.yaml: |
     # Rule name, must be unique

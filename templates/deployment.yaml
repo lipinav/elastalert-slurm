@@ -1,35 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: elastalert
+  name: {{ .Chart.Name }}-{{ .Release.Name }}
   labels:
-    app: elasticalert
+    app: {{ .Chart.Name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: elasticalert
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
+      app: {{ .Chart.Name }}
+  strategy: {{- .Values.strategy | toYaml | nindent 4 }}
   template:
     metadata:
       labels:
-        app: elasticalert
+        app: {{ .Chart.Name }}
     spec:
       containers:
-      - image: bitsensor/elastalert:2.0.0
+      - image: {{ .Values.image }}:{{ .Values.tag }}
         name: elastalert-container
         ports:
-        - containerPort: 3030
-        - containerPort: 3333
+        - containerPort: {{ .Values.port }}
         lifecycle:
           postStart:
             exec:
               command: [ "/bin/sh", "-c", "sed -i 's|10000|60000|' src/common/websocket.js"]
-        resources:
+        resources: {{- .Values.resources | toYaml | nindent 10 }}
           requests:
             cpu: 10m
             memory: 100Mi
