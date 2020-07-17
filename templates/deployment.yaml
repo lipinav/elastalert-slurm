@@ -61,4 +61,4 @@ spec:
           name: elastalert-rule-templates
       - name: smtp-conf
         secret:
-          secretName: elasticalert
+          secretName: {{ .Chart.Name }}
