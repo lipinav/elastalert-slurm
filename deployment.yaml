@@ -17,6 +17,8 @@ spec:
       containers:
       - image: bitsensor/elastalert:2.0.0
         name: elastalert-container
+        ports:
+          containerPort: 3030
         resources:
           requests:
             cpu: 10m
