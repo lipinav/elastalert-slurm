@@ -25,26 +25,28 @@ spec:
             cpu: 100m
             memory: 300Mi
         volumeMounts:
-        - mountPath: /opt/elastalert/
+        - mountPath: /opt/elastalert/config.yaml
+          subPath: config.yaml
           name: conf-volume
         - mountPath: /opt/elastalert-server/config/
-          name: conf2-volume
-        - mountPath: /opt/elastalert-server/config/
-          name: conf-test-volume
+          name: conf23
         - mountPath: /opt/elastalert/rule_templates/
           name: rules-tmpl-volume
-        - mountPath: /opt/elastalert/
+        - mountPath: /opt/elastalert/smtp.yaml
+          subPath: smtp:yaml
           name: smtp-conf
       volumes:
       - name: conf-volume
         configMap:
           name: elastalert-config-yaml
-      - name: conf2-volume
+      - name: conf23
         configMap:
-          name: elastalert-config-json
-      - name: conf-test-volume
-        configMap:
-          name: elastalert-config-test
+          name: elastalert-server
+          items:
+          - key: config.json
+            path: config.json
+          - key: config-test.yaml
+            path: config-test.yaml
       - name: rules-tmpl-volume
         configMap:
           name: elastalert-rule-templates
