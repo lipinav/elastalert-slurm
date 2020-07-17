@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastalert
+  labels:
+    app: elasticalert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticalert
+  template:
+    metadata:
+      labels:
+        app: elasticalert
+    spec:
+      containers:
+      - image: bitsensor/elastalert:2.0.0
+        name: elastalert-container
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 300Mi
+        volumeMounts:
+        - mountPath: /opt/elastalert/
+          name: conf-volume
+        - mountPath: /opt/elastalert-server/config/
+          name: conf2-volume
+        - mountPath: /opt/elastalert-server/config/
+          name: conf-test-volume
+        - mountPath: /opt/elastalert/rule_templates/
+          name: rules-tmpl-volume
+        - mountPath: /opt/elastalert/
+          name: smtp-conf
+      volumes:
+      - name: conf-volume
+        configMap:
+          name: elastalert-config-yaml
+      - name: conf2-volume
+        configMap:
+          name: elastalert-config-json
+      - name: conf-test-volume
+        configMap:
+          name: elastalert-config-test
+      - name: rules-tmpl-volume
+        configMap:
+          name: elastalert-rule-templates
+      - name: smtp-conf
+        secret:
+          secretName: elasticalert
