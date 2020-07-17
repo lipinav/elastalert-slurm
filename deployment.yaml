@@ -9,6 +9,11 @@ spec:
   selector:
     matchLabels:
       app: elasticalert
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -30,8 +35,12 @@ spec:
         - mountPath: /opt/elastalert/config.yaml
           subPath: config.yaml
           name: conf-volume
-        - mountPath: /opt/elastalert-server/config/
-          name: conf23
+        - mountPath: /opt/elastalert-server/config/config.json
+          subPath: config.json
+          name: conf2
+        - mountPath: /opt/elastalert-server/config/config-test.yaml
+          subPath: config-test.yaml
+          name: conf3
         - mountPath: /opt/elastalert/rule_templates/
           name: rules-tmpl-volume
         - mountPath: /opt/elastalert/smtp.yaml
@@ -41,14 +50,12 @@ spec:
       - name: conf-volume
         configMap:
           name: elastalert-config-yaml
-      - name: conf23
+      - name: conf2
         configMap:
-          name: elastalert-server
-          items:
-          - key: config.json
-            path: config.json
-          - key: config-test.yaml
-            path: config-test.yaml
+          name: elastalert-config-json
+      - name: conf3
+        configMap:
+          name: elastalert-config-test
       - name: rules-tmpl-volume
         configMap:
           name: elastalert-rule-templates
