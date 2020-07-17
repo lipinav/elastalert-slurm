@@ -9,7 +9,7 @@ strategy:
 image: bitsensor/elastalert
 tag: 2.0.0
 
-ports: 3030
+port: 3030
 
 resources:
   requests:
