@@ -44,7 +44,7 @@ spec:
         - mountPath: /opt/elastalert/rule_templates/
           name: rules-tmpl-volume
         - mountPath: /opt/elastalert/smtp.yaml
-          subPath: smtp:yaml
+          subPath: smtp.yaml
           name: smtp-conf
       volumes:
       - name: conf-volume
