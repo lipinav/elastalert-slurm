@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-{{ .Release.Name }}
+  name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
 spec:
@@ -49,16 +49,16 @@ spec:
       volumes:
       - name: conf-volume
         configMap:
-          name: elastalert-config-yaml
+          name: {{ .chart.name }}-config-yaml
       - name: conf2
         configMap:
-          name: elastalert-config-json
+          name: {{ .chart.name }}-config-json
       - name: conf3
         configMap:
-          name: elastalert-config-test
+          name: {{ .chart.name }}-config-test
       - name: rules-tmpl-volume
         configMap:
-          name: elastalert-rule-templates
+          name: {{ .chart.name }}-rule-templates
       - name: smtp-conf
         secret:
           secretName: {{ .Chart.Name }}
