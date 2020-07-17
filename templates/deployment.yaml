@@ -49,16 +49,16 @@ spec:
       volumes:
       - name: conf-volume
         configMap:
-          name: {{ .chart.name }}-config-yaml
+          name: {{ .Chart.Name }}-config-yaml
       - name: conf2
         configMap:
-          name: {{ .chart.name }}-config-json
+          name: {{ .Chart.Name }}-config-json
       - name: conf3
         configMap:
-          name: {{ .chart.name }}-config-test
+          name: {{ .Chart.Name }}-config-test
       - name: rules-tmpl-volume
         configMap:
-          name: {{ .chart.name }}-rule-templates
+          name: {{ .Chart.Name }}-rule-templates
       - name: smtp-conf
         secret:
           secretName: {{ .Chart.Name }}
