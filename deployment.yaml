@@ -24,6 +24,11 @@ spec:
         name: elastalert-container
         ports:
         - containerPort: 3030
+        - containerPort: 3333
+        lifecycle:
+          postStart:
+            exec:
+              command: [ "/bin/sh", "-c", "sed -i 's|10000|60000|' src/common/websocket.js"]
         resources:
           requests:
             cpu: 10m
